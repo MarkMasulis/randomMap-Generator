@@ -30,11 +30,16 @@ public class MapPath
     }
     private boolean goodPath(){
         boolean playable = true;
+        int minPathLength = hasPath();
         if(!hasEntrance()){
             playable = false;
         }
-        if(hasPath() == -1){
+        //minPathLength < Math.min(length, width) does not work!!!
+        if(minPathLength == -1 || minPathLength < Math.min(length, width)){
             playable = false;
+        }
+        if(playable){
+            System.out.println(minPathLength);
         }
         return playable;
     }
@@ -49,7 +54,7 @@ public class MapPath
         return false;
     }
     private int hasPath(){
-        int numSteps;
+        int numSteps = -1;
         int entranceL = 0;
         int entranceW = 0;;
         int exitL = 0;
@@ -76,7 +81,7 @@ public class MapPath
         //pathfinding provided by Vladimir
         int n = 1;
         pathArr[entranceL][entranceW] = n;
-        while(pathArr[exitL][exitW] == 0 && n < length*width + 1){
+        while(n < length*width + 1){
             for(int i = 0; i < length; i++){
                 for(int j = 0; j < width; j++){
                     if(pathArr[i][j] == n){
@@ -93,16 +98,23 @@ public class MapPath
                         if(j - 1 >= 0 && pathArr[i][j-1] == 0){
                             pathArr[i][j-1] = n+1;
                         }
+                        if(pathArr[exitL][exitW]  != 0 && numSteps == -1){
+                            numSteps = n;
+                        }
                     }
                 }
             }
             n++;
         }
-        if(pathArr[exitL][exitW] == 0){
-            numSteps = -1;
-        }else{
-            numSteps = n;
+        //clean up unaccessible tiles.
+        for(int i = 0; i < length; i++){
+            for(int j = 0; j < width; j++){
+                if(pathArr[i][j] == 0){
+                        map[i][j] = 'X';
+                }
+            }
         }
+        
         return numSteps;
     }
     

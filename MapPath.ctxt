@@ -15,4 +15,6 @@ comment6.params=type\ rValue
 comment6.target=void\ setEntranceExit(char,\ int)
 comment7.params=
 comment7.target=java.lang.String\ toString()
-numComments=8
+comment8.params=arr
+comment8.target=java.lang.String\ printArray(int[][])
+numComments=9
