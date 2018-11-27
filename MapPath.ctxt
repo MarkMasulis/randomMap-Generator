@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.target=MapPath
+comment1.params=length\ width
+comment1.target=MapPath(int,\ int)
+comment2.params=
+comment2.target=boolean\ goodPath()
+comment3.params=
+comment3.target=boolean\ hasEntranceAndExit()
+comment4.params=l\ w
+comment4.target=void\ setTiles(int,\ int)
+comment4.text=\r\n\ \ \ \ Takes\ distance\ from\ tile\ to\ closest\ corner.\ Makes\ random\ number\ equal\ to\ some\ distance\ from\ any\ point\ within\ the\ grid.\r\n\ \ \ \ if\ distance\ from\ closest\ corner\ is\ less\ than\ the\ random\ number,\ a\ wall\ is\ created.\ This\ leads\ to\ more\ open\ space\ towards\ center.\r\n
+comment5.params=type\ rValue
+comment5.target=void\ setEntranceExit(char,\ int)
+comment6.params=
+comment6.target=java.lang.String\ toString()
+numComments=7
