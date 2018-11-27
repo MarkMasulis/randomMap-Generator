@@ -38,9 +38,6 @@ public class MapPath
         if(minPathLength == -1 || minPathLength < Math.min(length, width)){
             playable = false;
         }
-        if(playable){
-            System.out.println(minPathLength);
-        }
         return playable;
     }
     private boolean hasEntrance(){
@@ -150,6 +147,10 @@ public class MapPath
                 case 3: map[r.nextInt(length-1)][width-1] = type;
                 break;
             }
+    }
+    
+    public char[][] getMap(){
+        return map;
     }
     
     public String toString(){
