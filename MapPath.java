@@ -30,14 +30,82 @@ public class MapPath
     }
     private boolean goodPath(){
         boolean playable = true;
+        if(!hasEntrance()){
+            playable = false;
+        }
+        if(hasPath() == -1){
+            playable = false;
+        }
         return playable;
     }
-    private boolean hasEntranceAndExit(){
-        boolean hasEntrance = false;
-        boolean hasExit = false;
-        
-        return hasEntrance && hasExit;
+    private boolean hasEntrance(){
+        for(int i = 0; i < length; i++){
+            for(int j = 0; j< width; j++){
+                if(map[i][j] == 'E'){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
+    private int hasPath(){
+        int numSteps;
+        int entranceL = 0;
+        int entranceW = 0;;
+        int exitL = 0;
+        int exitW = 0;
+        //copy map array into new array with values of 0 for each step on path, and a max value for walls. Record exit and entrance.
+        int[][] pathArr = new int[length][width];
+        for(int i = 0; i < length; i++){
+            for(int j = 0; j < width; j++){
+                if(map[i][j] == 'X'){
+                    pathArr[i][j] = length*width + 1;
+                }else{
+                    if(map[i][j] == 'E'){
+                        entranceL = i;
+                        entranceW = j;
+                    }
+                    if(map[i][j] == 'V'){
+                        exitL = i;
+                        exitW = j;
+                    }
+                    pathArr[i][j] = 0;
+                }
+            }
+        }
+        //pathfinding provided by Vladimir
+        int n = 1;
+        pathArr[entranceL][entranceW] = n;
+        while(pathArr[exitL][exitW] == 0 && n < length*width + 1){
+            for(int i = 0; i < length; i++){
+                for(int j = 0; j < width; j++){
+                    if(pathArr[i][j] == n){
+                        //Check surrounding squares and increase if necessary.
+                        if(i + 1 < length && pathArr[i+1][j] == 0){
+                            pathArr[i+1][j] = n+1;
+                        }
+                        if(i - 1 >= 0 && pathArr[i-1][j] == 0){
+                            pathArr[i-1][j] = n+1;
+                        }
+                        if(j + 1 < width && pathArr[i][j+1] == 0){
+                            pathArr[i][j+1] = n+1;
+                        }
+                        if(j - 1 >= 0 && pathArr[i][j-1] == 0){
+                            pathArr[i][j-1] = n+1;
+                        }
+                    }
+                }
+            }
+            n++;
+        }
+        if(pathArr[exitL][exitW] == 0){
+            numSteps = -1;
+        }else{
+            numSteps = n;
+        }
+        return numSteps;
+    }
+    
     
     /*
     Takes distance from tile to closest corner. Makes random number equal to some distance from any point within the grid.
